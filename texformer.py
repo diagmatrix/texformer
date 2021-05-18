@@ -2,7 +2,7 @@ import logging
 from uuid import uuid4
 import re
 from telegram.ext import Updater, InlineQueryHandler
-from telegram import InlineQueryResultCachedPhoto, InputTextMessageContent
+from telegram import InlineQueryResultCachedPhoto
 import matplotlib.pyplot as plt
 import matplotlib
 
@@ -34,7 +34,7 @@ def inline_formula(update, context):
     # Create the photo
     print("TRANSFORMING: "+query+"\n")
     photoinfo = bot.send_photo(
-        chat_id=-1001457635665,
+        chat_id=upload_id,
         photo=open(to_latex(query,update.inline_query.id),"rb"),
         caption="Formula"
     )
@@ -48,6 +48,7 @@ def inline_formula(update, context):
     ]
     context.bot.answer_inline_query(update.inline_query.id, results)
 
+# Adding the handler
 inline_formula_handler = InlineQueryHandler(callback=inline_formula)
 dispatcher.add_handler(inline_formula_handler)
 
